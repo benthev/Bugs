@@ -1,0 +1,66 @@
+---
+title: "Bug Demo"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(DT)
+library(crosstalk)
+library(leaflet)
+
+generate_dataTable <- TRUE
+filter_slider_with_date <- FALSE
+#Either of these will work BUT NOT BOTH
+
+
+
+location_level <- data.frame(longitudes = c(-87.56661, -87.62426, -87.58030),
+                             latitudes = c( 41.77250, 41.88061, 41.79218))
+location_level$number <- as.numeric(row.names(location_level))
+location_level$dates <-  as.Date('2019-01-01') + location_level$number
+location_level
+
+```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Master Table
+
+```{r}
+if (generate_dataTable) {
+  DT::datatable(location_level) ##This doesn't work if a filter slider uses a date variable
+} else {
+  location_level #This works
+}
+
+```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Map with Slider
+
+```{r}
+
+location_level_shared <- SharedData$new(location_level)
+if (filter_slider_with_date) {
+  filter_slider(id = 'posDate', label = 'Dates:', sharedData = location_level_shared, column = "dates")
+} else {
+  filter_slider(id = 'posDate', label = 'Number:', sharedData = location_level_shared, column = ~number)
+}
+
+leaflet(options = leafletOptions(minZoom = 10)) %>% 
+    addProviderTiles('Stamen.Toner', layerId = "basetile") %>% 
+    addAwesomeMarkers(data = location_level_shared,
+                      lng = ~longitudes,
+                      lat = ~latitudes,
+                      label = ~number,
+                      labelOptions = labelOptions(textsize = "15px"))
+
+```
+
