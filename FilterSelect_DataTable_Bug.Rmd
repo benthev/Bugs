@@ -56,11 +56,9 @@ if (filter_slider_with_date) {
 
 leaflet(options = leafletOptions(minZoom = 10)) %>% 
     addProviderTiles('Stamen.Toner', layerId = "basetile") %>% 
-    addAwesomeMarkers(data = location_level_shared,
-                      lng = ~longitudes,
-                      lat = ~latitudes,
-                      label = ~number,
-                      labelOptions = labelOptions(textsize = "15px"))
+    addMarkers(data = location_level_shared,
+               lng = ~longitudes,
+               lat = ~latitudes)
 
 ```
 
