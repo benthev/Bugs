@@ -55,7 +55,7 @@ if (filter_slider_with_date) {
   #This doesn't work if datatable is turned on
 } else {
   filter_slider(id = 'posDate', label = 'Number:', sharedData = location_level_shared, column = "number")
- #This works regardless (numeric variable used"
+ #This works regardless (numeric variable used)
 }
 
 leaflet(options = leafletOptions(minZoom = 10)) %>% 
