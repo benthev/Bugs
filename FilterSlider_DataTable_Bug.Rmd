@@ -12,8 +12,8 @@ library(DT)
 library(crosstalk)
 library(leaflet)
 
-generate_dataTable <- TRUE
-filter_slider_with_date <- FALSE
+generate_dataTable <- TRUE 
+filter_slider_with_date <- FALSE #Switch this to TRUE to demonstrate error
 #Either of these will work BUT NOT BOTH
 
 
@@ -33,9 +33,11 @@ Column {data-width=500}
 
 ```{r}
 if (generate_dataTable) {
-  DT::datatable(location_level) ##This doesn't work if a filter slider uses a date variable
+  DT::datatable(location_level) 
+ #This doesn't work if a filter slider uses a date variable
 } else {
-  location_level #This works
+  location_level
+  #This works regardless
 }
 
 ```
@@ -50,8 +52,10 @@ Column {data-width=500}
 location_level_shared <- SharedData$new(location_level)
 if (filter_slider_with_date) {
   filter_slider(id = 'posDate', label = 'Dates:', sharedData = location_level_shared, column = "dates")
+  #This doesn't work if datatable is turned on
 } else {
-  filter_slider(id = 'posDate', label = 'Number:', sharedData = location_level_shared, column = ~number)
+  filter_slider(id = 'posDate', label = 'Number:', sharedData = location_level_shared, column = "number")
+ #This works regardless (numeric variable used"
 }
 
 leaflet(options = leafletOptions(minZoom = 10)) %>% 
