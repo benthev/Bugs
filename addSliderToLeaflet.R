@@ -109,11 +109,6 @@ table(df$class)
 summary(df$lng)
 summary(df$lat)
 summary(df$date)
-df$time <- as.POSIXct(df$date) #Generate placeholder time variable
-summary(df$time)
-
-# df$start <- df$time
-
 
 df$start
 df$end 
