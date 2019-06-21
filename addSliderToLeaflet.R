@@ -9,6 +9,7 @@ library(sf)
 library(htmlwidgets)
 library(htmltools)
 library(geojsonio)
+library(lubridate)
 
 nrow <- 100
 df <- data.frame(lng = rep(-87.623720, nrow) + 0.0001*(1:nrow),
