@@ -17,7 +17,7 @@ df <- data.frame(lng = rep(-87.623720, nrow) + 0.0001*(1:nrow),
                  pos = 1:nrow,
                  start = as.Date('2019-01-01') + 1:nrow,
                  class = c(rep('A', nrow/2), rep('B', nrow/2)))
- 
+
 df$end <- df$start + 1
 
 #Try to clean up date
@@ -46,19 +46,19 @@ if (commence_clean) {
                      ifelse(second(df$start) < 10, paste0('0', second(df$start)), second(df$start)),
                      '.000Z')
   df$end <- paste0(year(df$end),
-                     '-',
-                     ifelse(month(df$end) < 10, paste0('0', month(df$end)), month(df$end)),
-                     '-',
-                     ifelse(day(df$end) < 10, paste0('0', day(df$end)), day(df$end)),
-                     'T',
-                     ifelse(hour(with_tz(df$end, tz = 'UTC')) < 10,
-                            paste0('0',hour(with_tz(df$end, tz = 'UTC'))),
-                            hour(with_tz(df$end, tz = 'UTC'))),
-                     ':',
-                     ifelse(minute(df$end) < 10, paste0('0', minute(df$end)), minute(df$end)),
-                     ':',
-                     ifelse(second(df$end) < 10, paste0('0', second(df$end)), second(df$end)),
-                     '.000Z')
+                   '-',
+                   ifelse(month(df$end) < 10, paste0('0', month(df$end)), month(df$end)),
+                   '-',
+                   ifelse(day(df$end) < 10, paste0('0', day(df$end)), day(df$end)),
+                   'T',
+                   ifelse(hour(with_tz(df$end, tz = 'UTC')) < 10,
+                          paste0('0',hour(with_tz(df$end, tz = 'UTC'))),
+                          hour(with_tz(df$end, tz = 'UTC'))),
+                   ':',
+                   ifelse(minute(df$end) < 10, paste0('0', minute(df$end)), minute(df$end)),
+                   ':',
+                   ifelse(second(df$end) < 10, paste0('0', second(df$end)), second(df$end)),
+                   '.000Z')
   
   
   #WITH FUNCTION
@@ -96,8 +96,8 @@ if (commence_clean) {
   #                    ':',
   #                    ifelse(second(df$end) < 10, paste0('0', second(df$end)), second(df$end)),
   #                    '.000Z')
-  print(df[,c('start', 'start_check', 'start_clean_time')])
-  print(df[,c('end', 'end_check', 'end_clean_time')])
+  print(head(df[,c('start', 'start_check', 'start_clean_time')]))
+  print(head(df[,c('end', 'end_check', 'end_clean_time')]))
   print(all(df$start_check == df$start))
   print(all(df$end_check == df$end))
 }
@@ -110,8 +110,8 @@ summary(df$lng)
 summary(df$lat)
 summary(df$date)
 
-df$start
-df$end 
+head(df$start)
+head(df$end) 
 
 
 # use geojsonio to convert our data.frame
@@ -153,7 +153,7 @@ with_animation <- base_view %>%
                    radius = 2, opacity = 0.5, color = 'blue',
                    group = 'B'
   ) %>%
-    addLayersControl(
+  addLayersControl(
     overlayGroups = c("A", "B"),
     options = layersControlOptions(collapsed = FALSE)) %>%
   onRender(sprintf(
@@ -189,5 +189,8 @@ with_animation <- base_view %>%
   ))
 #https://stackoverflow.com/questions/13091523/javascript-invalid-date-error-in-internet-explorer
 #for date issue with IE
+
+with_animation
+
 
 saveWidget(with_animation, 'with_animation.html')
